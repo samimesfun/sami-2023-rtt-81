@@ -1,6 +1,6 @@
 package variables;
 
-public class VARIABLE {
+public class AREA {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
