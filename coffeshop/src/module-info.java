@@ -4,5 +4,5 @@
 /**
  * 
  */
-module coffeeshop {
+module coffeshop {
 }
