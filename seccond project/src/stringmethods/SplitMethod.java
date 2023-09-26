@@ -12,6 +12,7 @@ public class SplitMethod {
 		String[] result = vowels.split("::");
 		// converting array to string and printing it
 		System.out.println("result = " + Arrays.toString(result));
+		
 
 	}
 
