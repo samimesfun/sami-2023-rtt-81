@@ -27,7 +27,7 @@ public class ArrayExample {
 
 		// enhanced for loop
 		for (String value : stringArray) {
-			System.out.println("The value = " + value);
+			System.out.println("The value = " + value );
 		}
 
 		System.out.println("=========================");

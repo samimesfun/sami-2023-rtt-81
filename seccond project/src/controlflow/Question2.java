@@ -7,11 +7,9 @@ public class Question2 {
 		int x = 15;
 		if (x < 10) {
 			System.out.println("x is less than 10");
-
-		} else if (x > 10) {
-			System.out.println("x is greater than 10");
-
 		}
-
+		else if (x > 10) {
+			System.out.println("x is greater than 10");
+		}
 	}
 }

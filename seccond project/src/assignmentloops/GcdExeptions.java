@@ -2,7 +2,7 @@ package assignmentloops;
 
 import java.util.Scanner;
 
-public class GreatestCommonDivisor {
+public class GcdExeptions {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
