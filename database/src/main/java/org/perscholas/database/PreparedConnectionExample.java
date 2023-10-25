@@ -34,14 +34,16 @@ public class PreparedConnectionExample {
 						// the first ? in the query is position 1
 						stmt.setString(1, firstname);
 						stmt.setString(2, lastname);
-						System.out.println(sql);
+						// in this line of code we are not going to pass in the SQL because we have already 
+						// passed it into the prepared statement
 						ResultSet result = stmt.executeQuery();
 						
 			while (result.next()) {
 				Integer id = result.getInt("id");
-				String name = result.getString("firstname");
+				String fname = result.getString("firstname");
+				String lname=result.getString("lastname");
 				String email = result.getString("email");
-				System.out.println(id + " | " + name + " | " + email);
+				System.out.println(id + " | " + fname + "|" +lname + " | " + email);
 			}
 			result.close();
 		} catch (Exception e) {
