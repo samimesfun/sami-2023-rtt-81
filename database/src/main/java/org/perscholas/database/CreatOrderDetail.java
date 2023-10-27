@@ -23,7 +23,7 @@ public class CreatOrderDetail {
 		String productName = scanner.nextLine();
 		
 		// looks up a product by a productName
-		List<Product> products = productDAO.findByName(productName);
+		List<Product> products = productDAO.findByNamePartial(productName);// change to by partialName 
 		
 		if ( products.size() == 0 ) {
 			System.out.println("You did not enter a valid proper product name");

@@ -24,14 +24,15 @@ public class ProductDAO {
 		return result;
 	}
 	
-	public List<Product> findByName(String name) {
+	public List<Product> findByNamePartial(String partialName) {       // change the method name by findbyPartialName
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		Session session = factory.openSession();
 
-		String hql = "FROM Product p WHERE p.productName = :name"; // Example of HQL to get all records of user class
-
+		//String hql = "FROM Product p WHERE p.productName = :name"; // Example of HQL to get all records of user class
+		String hql = "FROM Product p WHERE p.productName LIKE :partialName";// use like to get partial name 
 		TypedQuery<Product> query = session.createQuery(hql, Product.class);
-		query.setParameter("name", name);
+		//query.setParameter("name", name);
+		query.setParameter("partialName", "%" + partialName + "%"); // Use wildcards for partial search
 		List<Product> result = query.getResultList();
 		session.close();
 		
