@@ -43,10 +43,31 @@ public class CreatOrderDetail {
 		// the goal is to insert a record into the order details table
 		Product p = productDAO.findById(productId);
 		
+		// TODO this should anotehr check here to make sure that they product loaded is a product
+				// TODO this should another check here to make sure that they product loaded is a product
+				if ( p == null ) {
+					System.out.println("You have entered an invalid product id.");
+					System.exit(1);
+				}
+				// TODO add the ability to ask the user for an order number
 		// ask the user what order number they want to add the product too
-		Order o = orderDAO.findById(10100);
+				//Order o = orderDAO.findById(10100);
+				System.out.println("Enter an order number to add a product to:");
+				Integer orderId = scanner.nextInt();
+				Order o = orderDAO.findById(orderId);
+
+				// TODO
+				// if the order is null then print a message saying invalid order number
+
+				if ( o == null ) {
+					System.out.println("You have entered an invalid order id.");
+					System.exit(1);
+				}
+
 		
-		// if the product is already part of the odrer do not add it again
+				// TODO .... if the product is already part of the order details - 
+				// print a message saying you can not add a duplicate product
+				// its its not part of the order then add it to the order
 		for ( OrderDetail orderDetail : o.getOrderdetails() )  {
 			if ( orderDetail.getProduct().getId() == productId) {
 				// the product is already part of the order
@@ -54,6 +75,27 @@ public class CreatOrderDetail {
 				System.exit(1);
 			}
 		}
+		
+		// because this returned not null we know that the product is already part of the order.
+				OrderDetail queryOd = orderDetailDAO.findByOrderIdAndProductId(orderId, productId);
+				System.out.println("============> should not be null "+ queryOd);
+				if ( queryOd != null ) {
+					// here I would increment the quantity ordered
+					System.out.println("This product is already part of the order.");
+					System.exit(1);
+				} else {
+
+					OrderDetail od = new OrderDetail();
+					od.setProduct(p);
+					od.setOrder(o);
+					od.setOrderLineNumber(200);
+					od.setPriceEach(5.55);
+					od.setQuantityOrdered(300);
+
+					orderDetailDAO.save(od);
+
+					System.out.println("Successfully added product to order");
+				}
 		
 		OrderDetail od = new OrderDetail();
 		od.setProduct(p);
