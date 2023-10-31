@@ -82,7 +82,10 @@ public class CreatOrderDetail {
 				if ( queryOd != null ) {
 					// here I would increment the quantity ordered
 					System.out.println("This product is already part of the order.");
-					System.exit(1);
+					//System.exit(1);
+					System.out.println("How many additional would you like to order");
+					//int quantity= scanner.nextInt();
+					//queryOd.getQuantityOrdered(queryod)
 				} else {
 
 					OrderDetail od = new OrderDetail();
