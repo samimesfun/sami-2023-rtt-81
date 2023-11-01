@@ -44,11 +44,32 @@ public class CustomerDAO {
 		return result;
 		
 	}
-	public void save(Customer save) {
+	
+	public Customer updateFirstName(Integer id, String firstName) {
+		Customer save = findById(id);
+
+		save.setContactFirstname(firstName);
+
+		return save(save);
+	}
+
+	
+	//public void save(Customer save) {
+		
+	public Customer save(Customer save) {
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		Session session = factory.openSession();
+
 		Transaction t = session.beginTransaction();
+//		if ( save.getId() == null ) {
+//			session.save(save);
+//		} else {
+//			session.merge(save);
+//		}
 		session.saveOrUpdate(save);
 		t.commit();
+		session.close();
+
+		return save;
 	}
 }
