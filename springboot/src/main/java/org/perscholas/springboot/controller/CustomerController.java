@@ -9,12 +9,51 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
 @Slf4j
 @Controller
 public class CustomerController {
 
     @Autowired
     private CustomerDAO customerDao;
+   /* @GetMapping("/customer/search")
+    public ModelAndView search(@RequestParam(required = false)String search) {
+        ModelAndView response = new ModelAndView("customer/search");
+
+        log.debug("In the customer search controller method: " + search);
+        if (search != null) {
+
+            List<Customer> customers = customerDao.findByFirstName(search);
+            response.addObject("customerVar", customers);
+            response.addObject("search", search);
+            for (Customer customer : customers) {
+                log.debug("customer: id = " + customer.getId() + "lastname = " + customer.getLastName());
+            }
+        }
+        return response;
+    }*/
+
+    @GetMapping("/customer/search")
+    public ModelAndView search(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+
+        ModelAndView response = new ModelAndView("customer/search");
+
+        log.debug("In the customer search controller method: firstName={}, lastName={}", firstName, lastName);
+
+        if (firstName != null || lastName != null) {
+            List<Customer> customers = customerDao.findByFirstNameOrLastName(firstName != null ? firstName : lastName);
+            response.addObject("customerVar", customers);
+        }
+
+        response.addObject("firstName", firstName);
+        response.addObject("lastName", lastName);
+
+        return response;
+    }
 
     @GetMapping("/customer/create")
     public ModelAndView createCustomer() {
