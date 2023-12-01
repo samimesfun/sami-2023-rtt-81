@@ -7,7 +7,10 @@ import org.perscholas.springboot.formbean.CreateEmployeeFormBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -22,7 +25,25 @@ public class EmployeeController {
         log.debug("In create customer with no args");
         return response;
     }
+    @GetMapping("/employee/search")
+    public ModelAndView search(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
 
+        ModelAndView response = new ModelAndView("/employee/search");
+
+        log.debug("In the employee search.jsp controller method: firstName={}, lastName={}", firstName, lastName);
+
+        if (firstName != null || lastName != null) {
+            List<Employee> employees = employeeDAO.findByFirstNameOrLastName(firstName != null ? firstName : lastName);
+            response.addObject("employeeVar", employees);
+        }
+
+        response.addObject("firstName", firstName);
+        response.addObject("lastName", lastName);
+
+        return response;
+    }
     @GetMapping("/employee/createSubmit")
     public ModelAndView createEmployee(CreateEmployeeFormBean form){
         ModelAndView response=new ModelAndView("employee/create");

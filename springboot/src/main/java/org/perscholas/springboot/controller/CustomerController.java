@@ -18,16 +18,16 @@ public class CustomerController {
 
     @Autowired
     private CustomerDAO customerDao;
-   /* @GetMapping("/customer/search")
-    public ModelAndView search(@RequestParam(required = false)String search) {
-        ModelAndView response = new ModelAndView("customer/search");
+   /* @GetMapping("/customer/search.jsp")
+    public ModelAndView search.jsp(@RequestParam(required = false)String search.jsp) {
+        ModelAndView response = new ModelAndView("customer/search.jsp");
 
-        log.debug("In the customer search controller method: " + search);
-        if (search != null) {
+        log.debug("In the customer search.jsp controller method: " + search.jsp);
+        if (search.jsp != null) {
 
-            List<Customer> customers = customerDao.findByFirstName(search);
+            List<Customer> customers = customerDao.findByFirstName(search.jsp);
             response.addObject("customerVar", customers);
-            response.addObject("search", search);
+            response.addObject("search.jsp", search.jsp);
             for (Customer customer : customers) {
                 log.debug("customer: id = " + customer.getId() + "lastname = " + customer.getLastName());
             }
@@ -40,9 +40,9 @@ public class CustomerController {
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName) {
 
-        ModelAndView response = new ModelAndView("customer/search");
+        ModelAndView response = new ModelAndView("/customer/search");
 
-        log.debug("In the customer search controller method: firstName={}, lastName={}", firstName, lastName);
+        log.debug("In the customer search.jsp controller method: firstName={}, lastName={}", firstName, lastName);
 
         if (firstName != null || lastName != null) {
             List<Customer> customers = customerDao.findByFirstNameOrLastName(firstName != null ? firstName : lastName);
