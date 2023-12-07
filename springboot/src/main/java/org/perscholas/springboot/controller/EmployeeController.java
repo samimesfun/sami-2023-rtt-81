@@ -7,6 +7,7 @@ import org.perscholas.springboot.formbean.CreateEmployeeFormBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -60,6 +61,24 @@ public class EmployeeController {
         log.debug("In create customer with incoming args");
 
 
+        return response;
+    }
+
+    @GetMapping("/employee/edit/{employeeId}")
+    public ModelAndView editEmployee(@PathVariable int employeeId) {
+        ModelAndView response = new ModelAndView("employee/create");
+        Employee employee=employeeDAO.findById(employeeId);
+        CreateEmployeeFormBean form=new CreateEmployeeFormBean();
+
+        if(employee!=null){
+            form.setId(employee.getId());
+            form.setFirstName(employee.getFirstName());
+            form.setLastName(employee.getLastName());
+            form.setDepartmentName(employee.getDepartmentName());
+        } else {
+            log.warn("Employee with id " + employeeId + "was not found");
+        }
+        response.addObject("form",form);
         return response;
     }
 }

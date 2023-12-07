@@ -5,20 +5,21 @@
 <section>
     <div class="container">
         <form method="get" action="/employee/createSubmit">
+        <input type="hidden" name="id" value="${form.id}">
             <div class="mb-3">
                 <label for="firstName" class="form-label">Fist Name</label>
-                <input type="text" class="form-control" id="firstName" aria-describedby="firstNameHelp" name="firstName">
+                <input type="text" class="form-control" id="firstName" aria-describedby="firstNameHelp" name="firstName" value="${form.firstName}">
                 <div id="firstNameHelp" class="form-text">Please let us know your first name </div>
             </div>
             <div class="mb-3">
                             <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" aria-describedby="lastNameHelp" name="lastName">
+                            <input type="text" class="form-control" id="lastName" aria-describedby="lastNameHelp" name="lastName" value="${form.lastName}">
                             <div id="lastNameHelp" class="form-text">Please let us know your last name </div>
                         </div>
                         <div class="mb-3">
              <div class="mb-3">
                             <label for="departmentName" class="form-label">Department Name</label>
-                            <input type="text" class="form-control" id="departmentName" aria-describedby="firstNameHelp" name="departmentName">
+                            <input type="text" class="form-control" id="departmentName" aria-describedby="firstNameHelp" name="departmentName" value="${form.departmentName}">
                         </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

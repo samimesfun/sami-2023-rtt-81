@@ -1,14 +1,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <jsp:include page="../include/header.jsp"/>
 <section>
+<section>
+    <div class="bg-light2 pt-5 pb-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="m-0">Customer Search</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light1 pt-5 pb-5">
+     <div class ="container">
+         <c:if test="${not empty success}">
+         <div class="row justify-content-center">
+          <div class="col-6 text-center">
+           <div class="alert alert-success" role="alert">
+                   ${success}
+                   </div>
+                  </div>
+                </div>
+              </c:if>
+
 <div class = "container pt-5">
-<h1 class="pb-3"> Customer search <h1>
-<form action="/customer/search">
-<label for="firstName">First Name:</label>
-<input type="text" name="firstName" placeholder="Search by first name" value="${firstName}"/>
-<button type = "submit" class="btn btn-primary">Submit</button>
-</form>
+   <form action="/customer/search">
+   <label for="firstName">First Name:</label>
+   <input type="text" name="firstName" placeholder="Search by first name" value="${firstName}"/>
+   <button type = "submit" class="btn btn-primary">Submit</button>
+   </form>
 
 <div class= "pt-3">
 <form action="/customer/search">
@@ -28,6 +48,7 @@
                     <td>Last Name</td>
                     <td>Phone</td>
                     <td>City</td>
+                    <td>Edit</td>
                 </tr>
                 <c:forEach items="${customerVar}" var="customer">
                     <tr>
@@ -36,6 +57,7 @@
                         <td>${customer.lastName}</td>
                         <td>${customer.phone}</td>
                         <td>${customer.city}</td>
+                        <td><a href="/customer/edit/${customer.id}">Edit</a></td>
                     </tr>
                 </c:forEach>
             </table>

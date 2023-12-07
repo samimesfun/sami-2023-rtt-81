@@ -2,8 +2,14 @@
 
 <jsp:include page="../include/header.jsp"/>
 <section>
+<div class="bg-light2 pt-5 pb-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="m-0">Employee Search</h1>
+            </div>
+        </div>
+    </div>
 <div class = "container pt-5">
-<h1 class="pb-3"> Employee search <h1>
 <form action="/employee/search">
 <label for="firstName">First Name:</label>
 <input type="text" name="firstName" placeholder="Search by first name" value="${firstName}"/>
@@ -27,6 +33,7 @@
                     <td>First Name</td>
                     <td>Last Name</td>
                     <td>Department Name</td>
+                    <td>Edit</td>
                 </tr>
                 <c:forEach items="${employeeVar}" var="employee">
                     <tr>
@@ -34,6 +41,7 @@
                         <td>${employee.firstName}</td>
                         <td>${employee.lastName}</td>
                         <td>${employee.departmentName}</td>
+                       <td><a href="/employee/edit/${employee.id}">Edit</a></td>
                     </tr>
                 </c:forEach>
             </table>

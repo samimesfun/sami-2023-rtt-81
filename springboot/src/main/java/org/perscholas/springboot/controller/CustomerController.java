@@ -1,12 +1,18 @@
 package org.perscholas.springboot.controller;
 
+import io.micrometer.common.util.StringUtils;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.perscholas.springboot.database.dao.CustomerDAO;
 import org.perscholas.springboot.database.entity.Customer;
 import org.perscholas.springboot.formbean.CreateCustomerFormBean;
+import org.perscholas.springboot.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,6 +24,10 @@ public class CustomerController {
 
     @Autowired
     private CustomerDAO customerDao;
+
+    @Autowired
+    private CustomerService customerService;
+
    /* @GetMapping("/customer/search.jsp")
     public ModelAndView search.jsp(@RequestParam(required = false)String search.jsp) {
         ModelAndView response = new ModelAndView("customer/search.jsp");
@@ -63,23 +73,58 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/createSubmit")
-    public ModelAndView createCustomer(CreateCustomerFormBean form){
-        ModelAndView response=new ModelAndView("customer/create");
+    public ModelAndView createCustomer(@Valid CreateCustomerFormBean form, BindingResult bindingResult){
 
-        System.out.println("firstName"+form.getFirstName());
-        System.out.println("lastName"+form.getLastName());
-        System.out.println("phone"+form.getPhone());
-        System.out.println("city"+form.getCity());
+        if (bindingResult.hasErrors()) {
+            log.info("######################### In create customer submit - has errors #########################");
+            ModelAndView response = new ModelAndView("customer/create");
 
-        Customer customer = new Customer();
-        customer.setFirstName(form.getFirstName());
-        customer.setLastName(form.getLastName());
-        customer.setPhone(form.getPhone());
-        customer.setCity(form.getCity());
-        customerDao.save(customer);
-        log.debug("In create customer with incoming args");
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                log.info("error: " + error.getDefaultMessage());
+            }
+
+            response.addObject("form", form);
+            response.addObject("errors", bindingResult);
+            return response;
+        }
+
+        log.info("######################### In create customer submit - no error found #########################");
+
+        Customer c = customerService.createCustomer(form);
+
+        // the view name can either be a jsp file name or a redirect to another controller method
+        ModelAndView response = new ModelAndView();
+        response.setViewName("redirect:/customer/edit/" + c.getId() + "?success=Customer Saved Successfully");
+
+        return response;
+
+    }
+
+    @GetMapping("/customer/edit/{customerId}")
+    public ModelAndView editCustomer(@PathVariable int customerId,
+                                     @RequestParam(required = false) String success ) {
+        log.info("######################### In /customer/edit #########################");
+        ModelAndView response = new ModelAndView("customer/create");
+
+        Customer customer = customerDao.findById(customerId);
+
+        if (!StringUtils.isEmpty(success)) {
+            response.addObject("success", success);
+        }
+
+        CreateCustomerFormBean form = new CreateCustomerFormBean();
 
 
+        if(customer!=null) {
+            form.setId(customer.getId());
+            form.setFirstName(customer.getFirstName());
+            form.setLastName(customer.getLastName());
+            form.setPhone(customer.getPhone());
+            form.setCity(customer.getCity());
+        } else {
+            log.warn("Customer with id " + customerId + "was not found");
+        }
+        response.addObject("form",form);
         return response;
     }
 }
