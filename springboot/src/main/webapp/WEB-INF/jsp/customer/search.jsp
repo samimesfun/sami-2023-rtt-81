@@ -12,16 +12,7 @@
 </section>
 
 <section class="bg-light1 pt-5 pb-5">
-     <div class ="container">
-         <c:if test="${not empty success}">
-         <div class="row justify-content-center">
-          <div class="col-6 text-center">
-           <div class="alert alert-success" role="alert">
-                   ${success}
-                   </div>
-                  </div>
-                </div>
-              </c:if>
+
 
 <div class = "container pt-5">
    <form action="/customer/search">
@@ -48,7 +39,10 @@
                     <td>Last Name</td>
                     <td>Phone</td>
                     <td>City</td>
+                    <td>Image</td>
                     <td>Edit</td>
+                    <td>Detail</td>
+                    <td>Upload</td>
                 </tr>
                 <c:forEach items="${customerVar}" var="customer">
                     <tr>
@@ -57,7 +51,10 @@
                         <td>${customer.lastName}</td>
                         <td>${customer.phone}</td>
                         <td>${customer.city}</td>
+                        <td><img src="${customer.imageUrl}" style="max-width:100px"></td>
                         <td><a href="/customer/edit/${customer.id}">Edit</a></td>
+                        <td><a href="/customer/detail?id=${customer.id}">Detail</a></td>
+                         <td><a href="/customer/fileupload?id=${customer.id}">Upload</a></td>
                     </tr>
                 </c:forEach>
             </table>

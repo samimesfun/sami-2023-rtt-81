@@ -1,5 +1,6 @@
 package org.perscholas.springboot.security;
 
+import lombok.extern.slf4j.Slf4j;
 import org.perscholas.springboot.database.dao.UserDAO;
 import org.perscholas.springboot.database.dao.UserRoleDAO;
 import org.perscholas.springboot.database.entity.User;
@@ -10,11 +11,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+@Slf4j
+@Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
@@ -27,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // lookup the incoming username in the database
         User user = userDAO.findByEmailIgnoreCase(username);
-
+        log.debug("debugging userdetails service ");
         // if we did not find the user in the database then we throw an exception because the user is not valid
         if (user == null) {
             throw new UsernameNotFoundException("Username '" + username + "' not found in database");

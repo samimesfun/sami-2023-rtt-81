@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="customers")
+@Table(name = "customers")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +25,14 @@ public class Customer {
 
     @Column(name = "city")
     private String city;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+//    @Column(name = "user_id")
+//    private Integer userId;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

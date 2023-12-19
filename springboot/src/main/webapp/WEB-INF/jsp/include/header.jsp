@@ -1,3 +1,4 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,7 +16,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,15 +30,40 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/customer/search">Search Customer</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/employee/create">Create Employee</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/employee/search">Search Employee</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/auth/register">User Registration</a>
-                </li>
+
+                 <sec:authorize access="!isAuthenticated()">
+                       <li class="nav-item">
+                            <a class="nav-link" href="/auth/register">User Registration</a>
+                       </li>
+                       <li class="nav-item">
+                             <a class="nav-link" href="/auth/login">Login</a>
+                       </li>
+                 </sec:authorize>
+
+                 <sec:authorize access="hasAnyAuthority('ADMIN')">
+                        <li class="nav-item">
+                              <a class="nav-link" href="/admin/index">Admin</a>
+                        </li>
+                 </sec:authorize>
+
+                 <sec:authorize access="isAuthenticated()">
+                        <li class="nav-item">
+                              <a class="nav-link" href="/auth/logout">Logout</a>
+                         </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href=""><sec:authentication property="principal.username" /></a>
+                        </li>
+                </sec:authorize>
+                 <li class="nav-item">
+                                    <a class="nav-link" href="/admin/index">Secured Request</a>
+                                </li>
             </ul>
         </div>
     </div>

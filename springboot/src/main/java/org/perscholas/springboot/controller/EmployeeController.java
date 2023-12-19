@@ -20,18 +20,27 @@ public class EmployeeController {
     @Autowired
     private EmployeeDAO employeeDAO;
 
+    @GetMapping("/employee/fileupload")
+    public ModelAndView fileUpload() {
+        ModelAndView response = new ModelAndView("employee/fileupload");
+
+        log.info(" In fileupload with no Args");
+        return response;
+    }
+
     @GetMapping("/employee/create")
     public ModelAndView createEmployee() {
         ModelAndView response = new ModelAndView("employee/create");
         log.debug("In create customer with no args");
         return response;
     }
+
     @GetMapping("/employee/search")
     public ModelAndView search(
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName) {
 
-        ModelAndView response = new ModelAndView("/employee/search");
+        ModelAndView response = new ModelAndView("employee/search");
 
         log.debug("In the employee search.jsp controller method: firstName={}, lastName={}", firstName, lastName);
 
@@ -45,13 +54,14 @@ public class EmployeeController {
 
         return response;
     }
-    @GetMapping("/employee/createSubmit")
-    public ModelAndView createEmployee(CreateEmployeeFormBean form){
-        ModelAndView response=new ModelAndView("employee/create");
 
-        System.out.println("firstName"+form.getFirstName());
-        System.out.println("lastName"+form.getLastName());
-        System.out.println("phone"+form.getDepartmentName());
+    @GetMapping("/employee/createSubmit")
+    public ModelAndView createEmployee(CreateEmployeeFormBean form) {
+        ModelAndView response = new ModelAndView("employee/create");
+
+        System.out.println("firstName" + form.getFirstName());
+        System.out.println("lastName" + form.getLastName());
+        System.out.println("phone" + form.getDepartmentName());
 
         Employee employee = new Employee();
         employee.setFirstName(form.getFirstName());
@@ -67,10 +77,10 @@ public class EmployeeController {
     @GetMapping("/employee/edit/{employeeId}")
     public ModelAndView editEmployee(@PathVariable int employeeId) {
         ModelAndView response = new ModelAndView("employee/create");
-        Employee employee=employeeDAO.findById(employeeId);
-        CreateEmployeeFormBean form=new CreateEmployeeFormBean();
+        Employee employee = employeeDAO.findById(employeeId);
+        CreateEmployeeFormBean form = new CreateEmployeeFormBean();
 
-        if(employee!=null){
+        if (employee != null) {
             form.setId(employee.getId());
             form.setFirstName(employee.getFirstName());
             form.setLastName(employee.getLastName());
@@ -78,7 +88,7 @@ public class EmployeeController {
         } else {
             log.warn("Employee with id " + employeeId + "was not found");
         }
-        response.addObject("form",form);
+        response.addObject("form", form);
         return response;
     }
 }

@@ -1,7 +1,9 @@
 body {
-    font-family: Arial, sans-serif;
+    /*font-family: Arial, sans-serif;*/
     margin: 0;
     padding: 0;
+    background-color:black ;
+    color: white;
 }
 
 #main_container {
@@ -13,10 +15,12 @@ body {
 #section1 {
     display: flex;
     justify-content: space-between;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #box1 {
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #box1 img {
@@ -36,6 +40,7 @@ body {
 
 h2 {
     margin-top: 0;
+    font-family: caligraphy;
 }
 
 /* Add more CSS for styling as needed */
